@@ -1,17 +1,15 @@
 package com.github.userservice.controller;
 
-import com.github.userservice.models.User;
+
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
+import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -25,13 +23,21 @@ public class UserController {
 
     @PostMapping("create")
     @Transactional
-    public ResponseEntity createUser(@RequestBody @Valid UserRegisterData data, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<UserDetalingData> createUser(@RequestBody @Valid UserRegisterData data, UriComponentsBuilder uriComponentsBuilder){
 
-        User user = userService.creatUser(data);
+        UserDetalingData userDto = userService.creatUser(data);
 
-        URI uri = uriComponentsBuilder.path("/create/{id}").buildAndExpand(user.getId()).toUri();
+        URI uri = uriComponentsBuilder.path("user/create/{id}").buildAndExpand(userDto.id()).toUri();
 
-        return ResponseEntity.created(uri).body(new UserDetalingData(user));
+        return ResponseEntity.created(uri).body(userDto);
+    }
+
+    @PutMapping("update")
+    @Transactional
+    public ResponseEntity<UserDetalingData> updateUser(@RequestBody @Valid UserUpdateData dataUpdate){
+        UserDetalingData userDto = userService.updateUser(dataUpdate);
+
+        return ResponseEntity.ok(userDto);
     }
 
 }
