@@ -1,4 +1,4 @@
-package com.github.userservice.models.repository;
+package com.github.userservice.repository;
 
 import com.github.userservice.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

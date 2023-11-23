@@ -2,7 +2,7 @@ package com.github.userservice.service;
 
 import com.github.userservice.models.User;
 import com.github.userservice.models.recordClasses.UserRegisterData;
-import com.github.userservice.models.repository.UserRepository;
+import com.github.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
