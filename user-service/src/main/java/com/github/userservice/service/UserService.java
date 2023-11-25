@@ -5,6 +5,7 @@ import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,4 +40,11 @@ public class UserService {
         return userRepository.findAll(pages).map(UserDetalingData::new);
     }
 
+    public void deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }else{
+            throw new EntityNotFoundException();
+        }
+    }
 }
