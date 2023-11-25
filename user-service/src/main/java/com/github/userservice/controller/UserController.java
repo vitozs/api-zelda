@@ -51,5 +51,11 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
+    @GetMapping("usersList")
+    public ResponseEntity<Page<UserDetalingData>> usersList(@PageableDefault(size = 10, sort = {"name"}) Pageable pages){
+        Page<UserDetalingData> page =  userService.getUsersPages(pages);
+
+        return ResponseEntity.ok(page);
+    }
 
 }
