@@ -34,4 +34,9 @@ public class UserService {
         UserModel userModel = userRepository.getReferenceById(id);
         return new UserDetalingData(userModel);
     }
+
+    public Page<UserDetalingData> getUsersPages(Pageable pages) {
+        return userRepository.findAll(pages).map(UserDetalingData::new);
+    }
+
 }
