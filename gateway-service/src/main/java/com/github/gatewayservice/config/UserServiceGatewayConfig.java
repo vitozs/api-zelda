@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class UserServiceGatewayConfig {
 
     @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder){
+    public RouteLocator customRouteLocatorUser(RouteLocatorBuilder builder){
         return builder.routes()
                 .route("user-service-userList", r -> r.path("/user/usersList")
                         .uri("http://localhost:8085/"))
