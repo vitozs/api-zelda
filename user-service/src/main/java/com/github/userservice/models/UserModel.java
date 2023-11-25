@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User {
+public class UserModel {
 
     @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Long age;
 
-    public User(UserRegisterData data) {
+    public UserModel(UserRegisterData data) {
         this.name = data.name();
         this.age = data.age();
     }
