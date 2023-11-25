@@ -1,11 +1,13 @@
 package com.github.userservice.service;
 
-import com.github.userservice.models.User;
+import com.github.userservice.models.UserModel;
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,16 +17,21 @@ public class UserService {
 
 
     public UserDetalingData creatUser(UserRegisterData data){
-        User user = new User(data);
-        userRepository.save(user);
-       return new UserDetalingData(user);
+        UserModel userModel = new UserModel(data);
+        userRepository.save(userModel);
+       return new UserDetalingData(userModel);
     }
 
     public UserDetalingData updateUser(UserUpdateData dataUpdate) {
-        User user = userRepository.getReferenceById(dataUpdate.id());
+        UserModel userModel = userRepository.getReferenceById(dataUpdate.id());
 
-        user.updateInformation(dataUpdate);
+        userModel.updateInformation(dataUpdate);
 
-        return new UserDetalingData(user);
+        return new UserDetalingData(userModel);
+    }
+
+    public UserDetalingData getProfileUser(Long id) {
+        UserModel userModel = userRepository.getReferenceById(id);
+        return new UserDetalingData(userModel);
     }
 }
