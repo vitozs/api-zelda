@@ -7,6 +7,9 @@ import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,28 @@ public class UserController {
         UserDetalingData userDto = userService.updateUser(dataUpdate);
 
         return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping("profile/{id}")
+    @Transactional
+    public ResponseEntity<UserDetalingData> userProfile(@PathVariable Long id){
+        UserDetalingData userDto = userService.getProfileUser(id);
+
+        return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping("usersList")
+    public ResponseEntity<Page<UserDetalingData>> usersList(@PageableDefault(size = 10, sort = {"name"}) Pageable pages){
+        Page<UserDetalingData> page =  userService.getUsersPages(pages);
+
+        return ResponseEntity.ok(page);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+
+        return ResponseEntity.ok().build();
     }
 
 }
