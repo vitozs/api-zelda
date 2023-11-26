@@ -2,6 +2,7 @@ package com.github.userservice.models;
 
 
 import com.github.userservice.models.recordClasses.UserRegisterData;
+import com.github.userservice.models.recordClasses.UserUpdateData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,15 +16,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User {
+public class UserModel {
 
     @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Long age;
 
-    public User(UserRegisterData data) {
+    public UserModel(UserRegisterData data) {
         this.name = data.name();
         this.age = data.age();
+    }
+
+    public void updateInformation(UserUpdateData data) {
+        if ( data.name() != null){
+            this.name = data.name();
+        }
+        if (data.age() != null){
+            this.age = data.age();
+        }
     }
 }
