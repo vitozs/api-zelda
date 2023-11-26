@@ -1,9 +1,6 @@
 package com.github.userservice.models.recordClasses;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public record UserRegisterData(
         @NotBlank
@@ -11,6 +8,11 @@ public record UserRegisterData(
         @NotNull
         @Min(12)
         @Max(80)
-        Long age
+        Long age,
+        @Email
+        String email,
+        @NotBlank
+        String password
 ) {
+
 }
