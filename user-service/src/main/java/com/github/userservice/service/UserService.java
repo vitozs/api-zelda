@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -25,9 +28,7 @@ public class UserService {
 
     public UserDetalingData updateUser(UserUpdateData dataUpdate) {
         UserModel userModel = userRepository.getReferenceById(dataUpdate.id());
-
         userModel.updateInformation(dataUpdate);
-
         return new UserDetalingData(userModel);
     }
 

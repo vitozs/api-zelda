@@ -1,6 +1,7 @@
 package com.github.userservice.controller;
 
 
+import com.github.userservice.models.User;
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("user")
