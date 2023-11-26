@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +17,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public UserDetalingData creatUser(UserRegisterData data){
         UserModel userModel = new UserModel(data);
+        userModel.setPassword(passwordEncoder.encode(data.password()));
+
         userRepository.save(userModel);
        return new UserDetalingData(userModel);
     }
