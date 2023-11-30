@@ -22,8 +22,8 @@ public class UserService {
 
     public UserDetalingData creatUser(UserRegisterData data){
         UserModel userModel = new UserModel(data);
-        userRepository.save(userModel);
-       return new UserDetalingData(userModel);
+        userModel = userRepository.save(userModel);
+        return new UserDetalingData(userModel);
     }
 
     public UserDetalingData updateUser(UserUpdateData dataUpdate) {

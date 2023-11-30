@@ -1,7 +1,6 @@
 package com.github.userservice.controller;
 
 
-import com.github.userservice.models.User;
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
