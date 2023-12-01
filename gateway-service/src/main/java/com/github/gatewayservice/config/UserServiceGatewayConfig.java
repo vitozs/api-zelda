@@ -25,6 +25,8 @@ public class UserServiceGatewayConfig {
                 .route("user-service-delete", r -> r.path("/user/delete/**")
                         .filters(f -> f.rewritePath("/(?<id>.*)", "/${id}"))
                         .uri("http://localhost:8085/"))
+                .route("user-service-authentication", r -> r.path("/login/authentication")
+                        .uri("http://localhost:8085/"))
                 .build();
     }
 
