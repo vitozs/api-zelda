@@ -1,7 +1,7 @@
 package com.github.zeldaservice.service;
 
-import com.github.zeldaservice.exception.GameNotFoundException;
-import com.github.zeldaservice.exception.SomethingWentWrongException;
+import com.github.zeldaservice.infra.exception.GameNotFoundException;
+import com.github.zeldaservice.infra.exception.SomethingWentWrongException;
 import com.github.zeldaservice.model.RequestModel;
 import com.github.zeldaservice.model.SingleRequestModel;
 import org.springframework.stereotype.Service;
