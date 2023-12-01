@@ -1,4 +1,4 @@
-package com.github.zeldaservice.exception;
+package com.github.zeldaservice.infra.exception;
 
 public class GameNotFoundException extends Exception{
     public GameNotFoundException(String msg){
