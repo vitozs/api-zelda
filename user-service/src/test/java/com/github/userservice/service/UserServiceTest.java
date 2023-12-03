@@ -3,7 +3,9 @@ package com.github.userservice.service;
 import com.github.userservice.models.UserModel;
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
+import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,6 +55,38 @@ class UserServiceTest {
     }
 
     @Test
+    void updateUser_deveLancarExcecaoQuandoUserNaoExiste() {
+        // Arrange
+        Long userId = 1L;
+        UserUpdateData userUpdateData = new UserUpdateData(userId, "NovoNome", 25L);
+
+        Mockito.when(userRepository.getReferenceById(userId))
+                .thenThrow(EntityNotFoundException.class);
+
+        // Act & Assert
+        Assertions.assertThatThrownBy(() -> userService.updateUser(userUpdateData))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    void updateUser_deveAlterarOsDadosDoUserQuandoEleExiste() {
+        // Arrange
+        Long userId = 1L;
+        UserUpdateData userUpdateData = new UserUpdateData(userId, "NovoNome", 25L);
+        UserModel existingUser = new UserModel(userId, "NomeAntigo", 20L);
+
+        Mockito.when(userRepository.getReferenceById(userId)).thenReturn(existingUser);
+
+        // Act
+        UserDetalingData resultUserDetails = userService.updateUser(userUpdateData);
+
+        // Assert
+        Assertions.assertThat(resultUserDetails.id()).isEqualTo(userId);
+        Assertions.assertThat(resultUserDetails.name()).isEqualTo("NovoNome");
+        Assertions.assertThat(resultUserDetails.age()).isEqualTo(25L);
+    }
+
+    @Test
     void getProfileUser_deveRetornarUserComIdSolicitado() {
         // arrange
         Long userId = 1L;
@@ -67,8 +101,46 @@ class UserServiceTest {
 
         // assert
         Assertions.assertThat(resultUserDetails).isEqualTo(expectedUserDetails);
-
-        
     }
 
+    @Test
+    void getProfileUser_deveLancarExcecaoQuandoUserNaoExiste() {
+        // Arrange
+        Long userId = 1L;
+
+        Mockito.when(userRepository.getReferenceById(userId))
+                .thenThrow(EntityNotFoundException.class);
+
+
+        // Act & Assert
+        Assertions.assertThatThrownBy(() -> userService.getProfileUser(userId))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    void deleteUser_deveDeletarOUserQuandoEleExiste() {
+        // Arrange
+        Long userId = 1L;
+
+        Mockito.when(userRepository.existsById(userId)).thenReturn(true);
+
+        // Act
+        userService.deleteUser(userId);
+
+        // Assert
+        Mockito.verify(userRepository).deleteById(userId);
+    }
+
+    @Test
+    void deleteUser_deveLancarExcecaoQuandoEleNaoExiste() {
+        // Arrange
+        Long userId = 1L;
+
+        Mockito.when(userRepository.existsById(userId)).thenReturn(false);
+
+
+        // Act & Assert
+        Assertions.assertThatThrownBy(() -> userService.deleteUser(userId))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
 }
