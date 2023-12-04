@@ -12,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -23,16 +26,14 @@ public class UserService {
     public UserDetalingData creatUser(UserRegisterData data){
         UserModel userModel = new UserModel(data);
         userModel.setPassword(passwordEncoder.encode(data.password()));
-
         userRepository.save(userModel);
        return new UserDetalingData(userModel);
+
     }
 
     public UserDetalingData updateUser(UserUpdateData dataUpdate) {
         UserModel userModel = userRepository.getReferenceById(dataUpdate.id());
-
         userModel.updateInformation(dataUpdate);
-
         return new UserDetalingData(userModel);
     }
 
