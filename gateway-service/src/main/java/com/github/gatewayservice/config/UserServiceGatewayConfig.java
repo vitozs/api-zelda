@@ -11,6 +11,8 @@ public class UserServiceGatewayConfig {
     @Bean
     public RouteLocator customRouteLocatorUser(RouteLocatorBuilder builder){
         return builder.routes()
+                .route("login", r -> r.path("/login/user")
+                        .uri("http://localhost:8085/"))
                 .route("user-service-userList", r -> r.path("/user/usersList")
                         .uri("http://localhost:8085/"))
                 .route("user-service-update", r -> r.path("/user/update")
@@ -22,6 +24,8 @@ public class UserServiceGatewayConfig {
                         .uri("http://localhost:8085/"))
                 .route("user-service-delete", r -> r.path("/user/delete/**")
                         .filters(f -> f.rewritePath("/(?<id>.*)", "/${id}"))
+                        .uri("http://localhost:8085/"))
+                .route("user-service-authentication", r -> r.path("/login/authentication")
                         .uri("http://localhost:8085/"))
                 .build();
     }

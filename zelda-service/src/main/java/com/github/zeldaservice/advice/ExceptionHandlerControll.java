@@ -1,7 +1,7 @@
 package com.github.zeldaservice.advice;
 
-import com.github.zeldaservice.exception.GameNotFoundException;
-import com.github.zeldaservice.exception.SomethingWentWrongException;
+import com.github.zeldaservice.infra.exception.GameNotFoundException;
+import com.github.zeldaservice.infra.exception.SomethingWentWrongException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

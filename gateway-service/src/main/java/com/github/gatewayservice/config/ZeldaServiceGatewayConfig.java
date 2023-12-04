@@ -11,12 +11,12 @@ public class ZeldaServiceGatewayConfig {
     public RouteLocator customRouteLocatorZelda(RouteLocatorBuilder builder){
         return builder.routes()
                 .route("zelda-service-all", r -> r.path("/zelda/all")
-                        .uri("http://localhost:8086/"))
+                        .uri("http://localhost:8090/"))
                 .route("zelda-service-game", r -> r.path("/zelda/game")
-                        .uri("http://localhost:8086/"))
+                        .uri("http://localhost:8090/"))
                 .route("zelda-service-game-id", r -> r.path("/zelda/game/id/**")
                         .filters(f -> f.rewritePath("/(?<id>.*)", "/${id}"))
-                        .uri("http://localhost:8086/"))
+                        .uri("http://localhost:8090/"))
                 .build();
     }
 }

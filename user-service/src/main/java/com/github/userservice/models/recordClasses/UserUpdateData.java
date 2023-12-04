@@ -6,5 +6,7 @@ public record UserUpdateData(
         @NotNull
         Long id,
         String name,
-        Long age) {
+        Long age,
+        String email) {
+
 }

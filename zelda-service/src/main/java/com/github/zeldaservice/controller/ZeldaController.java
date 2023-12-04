@@ -1,6 +1,6 @@
 package com.github.zeldaservice.controller;
 
-import com.github.zeldaservice.exception.GameNotFoundException;
+import com.github.zeldaservice.infra.exception.GameNotFoundException;
 import com.github.zeldaservice.model.ZeldaGameModel;
 import com.github.zeldaservice.service.ZeldaService;
 import org.springframework.beans.factory.annotation.Autowired;

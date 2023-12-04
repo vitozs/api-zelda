@@ -1,6 +1,6 @@
 package com.github.zeldaservice.model;
 
-import com.github.zeldaservice.exception.GameNotFoundException;
+import com.github.zeldaservice.infra.exception.GameNotFoundException;
 import com.github.zeldaservice.service.ZeldaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
