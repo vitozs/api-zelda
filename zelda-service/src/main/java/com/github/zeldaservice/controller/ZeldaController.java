@@ -3,6 +3,7 @@ package com.github.zeldaservice.controller;
 import com.github.zeldaservice.infra.exception.GameNotFoundException;
 import com.github.zeldaservice.model.ZeldaGameModel;
 import com.github.zeldaservice.model.favoriteModel.FavoriteGameModel;
+import com.github.zeldaservice.model.favoriteModel.ReturnFavoritesModel;
 import com.github.zeldaservice.service.ZeldaService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,15 @@ public class ZeldaController {
     }
 
     @PostMapping("game/saveFavorite/{id}")
-    public ResponseEntity<FavoriteGameModel> favoriteGame(@PathVariable("id") String id, HttpServletRequest request) throws GameNotFoundException {
-
-
+    public ResponseEntity<FavoriteGameModel> favoriteGame(@PathVariable("id") String id, HttpServletRequest request) {
 
         return new ResponseEntity<>( zeldaService.saveFavoriteGame(id, request),HttpStatus.OK);
+    }
+
+    @GetMapping("game/Favorites")
+    public ResponseEntity<ReturnFavoritesModel> getFavoriteGames(HttpServletRequest request) throws GameNotFoundException {
+
+
+        return new ResponseEntity<>(zeldaService.getFavoriteGames(request), HttpStatus.OK);
     }
 }
