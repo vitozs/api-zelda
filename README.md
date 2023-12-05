@@ -1,12 +1,22 @@
-# api-zelda
+# **Projeto Final API Zelda**
 
-## Configuracao de ambiente
+Este projeto consiste em uma API desenvolvida em Spring Boot utilizando o Gradle como gerenciador de dependências.
+O projeto possui três componentes principais: uma API Gateway, um serviço de gerenciamento de usuários (user-service), e um serviço de consulta à API pública da franquia Zelda (zelda-service).
+A aplicação é voltada para os fãs da renomada série de jogos "The Legend of Zelda".
 
-Buildar imagem docker do postgres, que ja possui a configuracao de senha, nome de banco e querys
+## **Estrutura do Projeto**
 
-``docker build ./resources/ -t usersdb_image``
+- **API gateway:**
+  A API Gateway serve como o ponto de entrada unificado para os serviços oferecidos.
+- **user-service:**
+  API REST especializada em operações CRUD relacionadas aos perfis de usuário.
+- **zelda-service:**
+  API REST dedicada à consulta da API pública da franquia Zelda. Esta camada permite que os usuários obtenham informações relevantes sobre os jogos, personagens, e outros elementos da série.
 
-Subir o container baseado na imagem buildada
+## **Configuração e Execução**
 
-``docker run -p 5432:5432 --name dbusers -d usersdb_image``
- 
+Consulte o README de cada serviço (`gateway-service`, `user-service`, `zelda-service`) para obter instruções detalhadas sobre configuração e execução.
+
+## **Equipe de Desenvolvedores**
+
+Bianca Gomes, Denis Kizlyk, Robert de Carvalho, Vitor Chagas
