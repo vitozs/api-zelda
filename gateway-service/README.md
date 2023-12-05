@@ -29,6 +29,6 @@ Agora que o ambiente está configurado, siga os passos abaixo para executar a ap
     gradlew bootRun
     ```
 
-> BIDO: Checar se a porta está correta no 'application.resources'
+
 
 A aplicação estará disponível em http://localhost:8089. Você pode acessar a API através dessa URL e começar a interagir com os endpoints fornecidos.
