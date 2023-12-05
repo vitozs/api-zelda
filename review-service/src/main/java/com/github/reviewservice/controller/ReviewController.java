@@ -1,5 +1,7 @@
 package com.github.reviewservice.controller;
 
+import com.github.reviewservice.reviewsDTO.ReturnGameModel;
+import com.github.reviewservice.reviewsDTO.ReviewRequestDTO;
 import com.github.reviewservice.reviewsDTO.ReviewResponseDTO;
 import com.github.reviewservice.service.UserReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,14 @@ public class ReviewController {
     @Autowired
     UserReviewService userReviewService;
 
-    @GetMapping("get-all")
+    @GetMapping("get-by-user")
     public ResponseEntity<List<ReviewResponseDTO>> getAllReviews(@RequestHeader HttpHeaders headers){
         return new ResponseEntity<>(userReviewService.getAllReviews(headers), HttpStatus.OK);
+    }
+
+    @GetMapping("get-by-game")
+    public ResponseEntity<ReturnGameModel> getAllByGame(@RequestParam String id_jogo){
+        return new ResponseEntity<>(userReviewService.getAllByGame(id_jogo), HttpStatus.OK);
     }
 
     @PostMapping("create")
@@ -28,7 +35,7 @@ public class ReviewController {
     }
 
     @PostMapping("update")
-    public ResponseEntity<?> createReview(@RequestHeader HttpHeaders headers, @RequestParam String id, @RequestBody ReviewRequestDTO analiseUser){
+    public ResponseEntity<?> updateReview(@RequestHeader HttpHeaders headers, @RequestParam String id, @RequestBody ReviewRequestDTO analiseUser){
         return new ResponseEntity<>(userReviewService.updateReview(headers, id, analiseUser), HttpStatus.OK);
     }
 
