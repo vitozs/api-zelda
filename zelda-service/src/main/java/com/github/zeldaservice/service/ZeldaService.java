@@ -1,15 +1,30 @@
 package com.github.zeldaservice.service;
 
+import com.github.zeldaservice.Repository.FavoriteRepository;
 import com.github.zeldaservice.infra.exception.GameNotFoundException;
 import com.github.zeldaservice.infra.exception.SomethingWentWrongException;
+import com.github.zeldaservice.infra.security.SecurityZeldaFilter;
 import com.github.zeldaservice.model.RequestModel;
 import com.github.zeldaservice.model.SingleRequestModel;
+import com.github.zeldaservice.model.favoriteModel.FavoriteGameModel;
+import com.github.zeldaservice.model.favoriteModel.ReturnFavoritesModel;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
 @Service
 public class ZeldaService {
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private FavoriteRepository favoriteRepository;
+
+    private SecurityZeldaFilter securityZeldaFilter = new SecurityZeldaFilter();
 
     public RequestModel getAllGames() throws SomethingWentWrongException{
         try {
@@ -61,5 +76,29 @@ public class ZeldaService {
             throw new GameNotFoundException("Id do jogo digitado incorretamente, tente novamente mais tarde");
         }
 
+    }
+
+    public FavoriteGameModel saveFavoriteGame(String id, HttpServletRequest request) {
+        String tokenJWT = securityZeldaFilter.recoverToken(request);
+
+        FavoriteGameModel favoriteGameModel = new FavoriteGameModel();
+
+        favoriteGameModel.setId_user(tokenService.getIdUser(tokenJWT));
+        favoriteGameModel.setId_game(favoriteRepository.findByid_game(id));
+
+        return  favoriteRepository.save(favoriteGameModel);
+    }
+
+    public ReturnFavoritesModel getFavoriteGames(HttpServletRequest request) {
+        String tokenJWT = securityZeldaFilter.recoverToken(request);
+
+        ReturnFavoritesModel returnFavoritesModel = new ReturnFavoritesModel();
+
+        Long idUser = tokenService.getIdUser(tokenJWT);
+
+        returnFavoritesModel.setUserModel(favoriteRepository.findByname(idUser));
+        returnFavoritesModel.setFavoriteGamesList(favoriteRepository.findByGames(idUser));
+
+        return returnFavoritesModel;
     }
 }
