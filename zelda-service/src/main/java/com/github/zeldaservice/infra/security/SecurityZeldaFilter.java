@@ -1,5 +1,6 @@
 package com.github.zeldaservice.infra.security;
 
+import com.github.zeldaservice.exception.TokenInexistenteException;
 import com.github.zeldaservice.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,6 +44,8 @@ public class SecurityZeldaFilter extends OncePerRequestFilter {
                 var authentication = new UsernamePasswordAuthenticationToken(subject, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+        }else{
+            throw new TokenInexistenteException("Erro ao autenticar. Logue na sua conta e utilize o token!");
         }
 
 
