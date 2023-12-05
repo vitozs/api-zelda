@@ -7,9 +7,11 @@ import com.github.zeldaservice.infra.security.SecurityZeldaFilter;
 import com.github.zeldaservice.model.RequestModel;
 import com.github.zeldaservice.model.SingleRequestModel;
 import com.github.zeldaservice.model.favoriteModel.FavoriteGameModel;
+import com.github.zeldaservice.model.favoriteModel.ReturnFavoritesModel;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
@@ -85,5 +87,18 @@ public class ZeldaService {
         favoriteGameModel.setId_game(favoriteRepository.findByid_game(id));
 
         return  favoriteRepository.save(favoriteGameModel);
+    }
+
+    public ReturnFavoritesModel getFavoriteGames(HttpServletRequest request) {
+        String tokenJWT = securityZeldaFilter.recoverToken(request);
+
+        ReturnFavoritesModel returnFavoritesModel = new ReturnFavoritesModel();
+
+        Long idUser = tokenService.getIdUser(tokenJWT);
+
+        returnFavoritesModel.setUserModel(favoriteRepository.findByname(idUser));
+        returnFavoritesModel.setFavoriteGamesList(favoriteRepository.findByGames(idUser));
+
+        return returnFavoritesModel;
     }
 }
