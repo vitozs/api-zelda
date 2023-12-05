@@ -24,4 +24,17 @@ public class TokenService {
             throw new RuntimeException("Invalid or expired JWT token!");
         }
     }
+
+    public Long getIdUser(String tokenJWT){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("UserToken")
+                    .build()
+                    .verify(tokenJWT)
+                    .getClaim("id").asLong();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Invalid or expired JWT token!");
+        }
+    }
 }
