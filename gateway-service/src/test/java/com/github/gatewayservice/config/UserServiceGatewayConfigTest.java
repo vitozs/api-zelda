@@ -48,5 +48,13 @@ public class UserServiceGatewayConfigTest {
                 .expectStatus().isOk();
     }
 
+    @Test
+    public void profile_deveRetornar403() {
+        webTestClient.get().uri("/user/profile")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer ")
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
 
     }
