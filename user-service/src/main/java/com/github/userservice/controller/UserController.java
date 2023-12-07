@@ -5,6 +5,7 @@ import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,30 +40,26 @@ public class UserController {
 
     @PutMapping("update")
     @Transactional
-    public ResponseEntity<UserDetalingData> updateUser(@RequestBody @Valid UserUpdateData dataUpdate){
-        UserDetalingData userDto = userService.updateUser(dataUpdate);
+    public ResponseEntity<UserDetalingData> updateUser(@RequestBody @Valid UserUpdateData dataUpdate, HttpServletRequest request){
+        UserDetalingData userDto = userService.updateUser(dataUpdate, request);
 
         return ResponseEntity.ok(userDto);
     }
 
-    @GetMapping("profile/{id}")
+
+
+    @GetMapping("profile")
     @Transactional
-    public ResponseEntity<UserDetalingData> userProfile(@PathVariable Long id){
-        UserDetalingData userDto = userService.getProfileUser(id);
+    public ResponseEntity<UserDetalingData> userProfile(HttpServletRequest request){
+        UserDetalingData userDto = userService.getProfileUser(request);
 
         return ResponseEntity.ok(userDto);
     }
 
-    @GetMapping("usersList")
-    public ResponseEntity<Page<UserDetalingData>> usersList(@PageableDefault(size = 10, sort = {"name"}) Pageable pages){
-        Page<UserDetalingData> page =  userService.getUsersPages(pages);
 
-        return ResponseEntity.ok(page);
-    }
-
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+    @DeleteMapping("delete")
+    public ResponseEntity<?> deleteUser(HttpServletRequest request){
+        userService.deleteUser(request);
 
         return ResponseEntity.ok().build();
     }
