@@ -32,7 +32,7 @@ public class SecurityZeldaFilter extends OncePerRequestFilter {
             MultiValueMap<String, String> bodyValues = new LinkedMultiValueMap<>();
             bodyValues.add("email", subject);
 
-            ResponseEntity<Boolean> responseEntity = WebClient.create("http://localhost:8089/login/authentication")
+            ResponseEntity<Boolean> responseEntity = WebClient.create("http://user-service-app-env-1.eba-zevpvgmk.us-east-1.elasticbeanstalk.com/login/authentication")
                     .post()
                     .body(BodyInserters.fromFormData(bodyValues))
                     .retrieve()
@@ -44,10 +44,7 @@ public class SecurityZeldaFilter extends OncePerRequestFilter {
                 var authentication = new UsernamePasswordAuthenticationToken(subject, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        }else{
-            throw new TokenInexistenteException("Erro ao autenticar. Logue na sua conta e utilize o token!");
         }
-
 
         filterChain.doFilter(request, response);
     }
