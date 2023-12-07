@@ -83,8 +83,8 @@ public class ZeldaService {
 
         FavoriteGameModel favoriteGameModel = new FavoriteGameModel();
 
-        favoriteGameModel.setId_user(tokenService.getIdUser(tokenJWT));
-        favoriteGameModel.setId_game(favoriteRepository.findByid_game(id));
+        favoriteGameModel.setId_usuario(tokenService.getIdUser(tokenJWT));
+        favoriteGameModel.setId_jogo(favoriteRepository.findByid_jogo(id));
 
         return  favoriteRepository.save(favoriteGameModel);
     }
