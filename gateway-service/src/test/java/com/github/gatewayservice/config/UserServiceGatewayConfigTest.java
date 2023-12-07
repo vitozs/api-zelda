@@ -80,5 +80,14 @@ public class UserServiceGatewayConfigTest {
                 .expectStatus().isCreated();
     }
 
+    @Test
+    public void create_deveRetornar400() {
+        webTestClient.post().uri("/user/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("{}")
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
 
     }
