@@ -54,7 +54,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private Long recoverId (HttpServletRequest request){
+   public Long recoverId(HttpServletRequest request){
         String tokenJwt = securityFilter.recoverToken(request);
 
         return tokenService.getIdUser(tokenJwt);
