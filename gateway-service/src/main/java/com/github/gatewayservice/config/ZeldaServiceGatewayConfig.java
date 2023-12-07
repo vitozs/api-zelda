@@ -17,6 +17,11 @@ public class ZeldaServiceGatewayConfig {
                 .route("zelda-service-game-id", r -> r.path("/zelda/game/id/**")
                         .filters(f -> f.rewritePath("/(?<id>.*)", "/${id}"))
                         .uri("http://localhost:8090/"))
+                .route("zelda-service-Favorites", r -> r.path("/zelda/game/Favorites")
+                        .uri("http://localhost:8090/"))
+                .route("zelda-service-game-id", r -> r.path("/zelda/game/saveFavorite/**")
+                        .filters(f -> f.rewritePath("/(?<id>.*)", "/${id}"))
+                        .uri("http://localhost:8090/"))
                 .build();
     }
 }
