@@ -12,19 +12,19 @@ import java.util.List;
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteGameModel, Long> {
 
-    @Query(value = "select id from games where id_game = :id", nativeQuery=true)
-    Long findByid_game(@Param("id") String id);
+    @Query(value = "select id from jogos where id_jogo = :id", nativeQuery=true)
+    Long findByid_jogo(@Param("id") String id);
 
     @Query(value = "SELECT users.name as username\n" +
             "FROM users\n" +
-            "JOIN user_and_favorite_game ON user_and_favorite_game.id_user = users.id\n" +
+            "JOIN usuario_e_jogo_favorito ON usuario_e_jogo_favorito.id_usuario = users.id\n" +
             "WHERE users.id = :id LIMIT 1", nativeQuery=true)
     String findByname(@Param("id") Long id);
 
-    @Query(value = "SELECT games.name as game, games.id_game as game_id, games.description as description\n" +
+    @Query(value = "SELECT jogos.name as game, jogos.id_jogo as game_id, jogos.description as description\n" +
             "FROM users\n" +
-            "JOIN user_and_favorite_game ON user_and_favorite_game.id_user = users.id\n" +
-            "JOIN games ON user_and_favorite_game.id_game = games.id\n" +
+            "JOIN usuario_e_jogo_favorito ON usuario_e_jogo_favorito.id_usuario = users.id\n" +
+            "JOIN jogos ON usuario_e_jogo_favorito.id_jogo = jogos.id\n" +
             "WHERE users.id = :id", nativeQuery=true)
     List<ReturnFavoriteDTO> findByGames(@Param("id") Long id);
 }
