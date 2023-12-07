@@ -66,5 +66,19 @@ public class UserServiceGatewayConfigTest {
                 .expectStatus().isOk();
     }
 
+    @Test
+    public void create_deveRetornar200() {
+        webTestClient.post().uri("/user/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("{ \n" +
+                        "    \"name\": \"Robert Perquim\",\n" +
+                        "    \"age\": 21,\n" +
+                        "    \"email\" : \"robert@gmail.com\",\n" +
+                        "    \"password\": \"12345678\"\n" +
+                        "}")
+                .exchange()
+                .expectStatus().isCreated();
+    }
+
 
     }
