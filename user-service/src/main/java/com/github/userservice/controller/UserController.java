@@ -5,6 +5,7 @@ import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userDto);
     }
-
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("update")
     @Transactional
     public ResponseEntity<UserDetalingData> updateUser(@RequestBody @Valid UserUpdateData dataUpdate, HttpServletRequest request){
@@ -48,6 +49,7 @@ public class UserController {
 
 
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("profile")
     @Transactional
     public ResponseEntity<UserDetalingData> userProfile(HttpServletRequest request){
@@ -56,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("delete")
     public ResponseEntity<?> deleteUser(HttpServletRequest request){
         userService.deleteUser(request);
