@@ -29,5 +29,15 @@ public class UserServiceGatewayConfigTest {
 
     }
 
+    @Test
+    public void login_DeveRetornar401() {
+        webTestClient.post().uri("/login/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("{}")
+                .exchange()
+                .expectStatus().isUnauthorized();
+
+    }
+
 
     }
