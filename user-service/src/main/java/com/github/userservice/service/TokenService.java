@@ -46,6 +46,19 @@ public class TokenService {
         }
     }
 
+    public Long getIdUser(String tokenJWT){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("UserToken")
+                    .build()
+                    .verify(tokenJWT)
+                    .getClaim("id").asLong();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Invalid or expired JWT token!");
+        }
+    }
+
 
     private Instant expirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
