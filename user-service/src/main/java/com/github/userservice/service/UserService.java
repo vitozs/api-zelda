@@ -1,19 +1,18 @@
 package com.github.userservice.service;
 
+import com.github.userservice.infra.security.SecurityFilter;
 import com.github.userservice.models.UserModel;
 import com.github.userservice.models.recordClasses.UserDetalingData;
 import com.github.userservice.models.recordClasses.UserRegisterData;
 import com.github.userservice.models.recordClasses.UserUpdateData;
 import com.github.userservice.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,6 +22,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private TokenService tokenService;
+
+    private SecurityFilter securityFilter = new SecurityFilter();
+
     public UserDetalingData creatUser(UserRegisterData data){
         UserModel userModel = new UserModel(data);
         userModel.setPassword(passwordEncoder.encode(data.password()));
@@ -31,26 +35,29 @@ public class UserService {
 
     }
 
-    public UserDetalingData updateUser(UserUpdateData dataUpdate) {
-        UserModel userModel = userRepository.getReferenceById(dataUpdate.id());
+    public UserDetalingData updateUser(UserUpdateData dataUpdate, HttpServletRequest request) {
+        Long id = recoverId(request);
+        UserModel userModel = userRepository.getReferenceById(id);
         userModel.updateInformation(dataUpdate);
         return new UserDetalingData(userModel);
     }
 
-    public UserDetalingData getProfileUser(Long id) {
+    public UserDetalingData getProfileUser(HttpServletRequest request) {
+        Long id = recoverId(request);
         UserModel userModel = userRepository.getReferenceById(id);
         return new UserDetalingData(userModel);
     }
 
-    public Page<UserDetalingData> getUsersPages(Pageable pages) {
-        return userRepository.findAll(pages).map(UserDetalingData::new);
+
+    public void deleteUser(HttpServletRequest request) {
+        Long id = recoverId(request);
+        userRepository.deleteById(id);
     }
 
-    public void deleteUser(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        }else{
-            throw new EntityNotFoundException();
-        }
+    private Long recoverId (HttpServletRequest request){
+        String tokenJwt = securityFilter.recoverToken(request);
+
+        return tokenService.getIdUser(tokenJwt);
     }
+
 }
