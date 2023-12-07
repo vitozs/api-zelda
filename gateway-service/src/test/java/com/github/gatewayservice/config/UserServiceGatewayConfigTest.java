@@ -56,5 +56,15 @@ public class UserServiceGatewayConfigTest {
                 .expectStatus().isForbidden();
     }
 
+    @Test
+    public void update_deveRetornar200() {
+        webTestClient.put().uri("/user/update")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnRAZ21haWwuY29tIiwiaWQiOjE1LCJleHAiOjE3MDE5MzQ3OTF9.4zw28Yr-ZcIdptp82Vrm-9daZD7O1ml0d98Pl789Ah4")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("{}")
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 
     }
