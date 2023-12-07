@@ -43,7 +43,7 @@ public class UserServiceGatewayConfigTest {
     @Test
     public void profile_deveRetornar200() {
         webTestClient.get().uri("/user/profile")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnRAZ21haWwuY29tIiwiaWQiOjE1LCJleHAiOjE3MDE5MzQ3OTF9.4zw28Yr-ZcIdptp82Vrm-9daZD7O1ml0d98Pl789Ah4")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnQyQGdtYWlsLmNvbSIsImlkIjoxOSwiZXhwIjoxNzAxOTM4NDc1fQ.dd2oBwogtv7JQGHI_35kygyi9-x9U9m3ToD_I5NtQMQ")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -59,7 +59,7 @@ public class UserServiceGatewayConfigTest {
     @Test
     public void update_deveRetornar200() {
         webTestClient.put().uri("/user/update")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnRAZ21haWwuY29tIiwiaWQiOjE1LCJleHAiOjE3MDE5MzQ3OTF9.4zw28Yr-ZcIdptp82Vrm-9daZD7O1ml0d98Pl789Ah4")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnQyQGdtYWlsLmNvbSIsImlkIjoxOSwiZXhwIjoxNzAxOTM4NDc1fQ.dd2oBwogtv7JQGHI_35kygyi9-x9U9m3ToD_I5NtQMQ")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue("{}")
                 .exchange()
@@ -73,7 +73,7 @@ public class UserServiceGatewayConfigTest {
                 .bodyValue("{ \n" +
                         "    \"name\": \"Robert Perquim\",\n" +
                         "    \"age\": 21,\n" +
-                        "    \"email\" : \"robert@gmail.com\",\n" +
+                        "    \"email\" : \"robert22@gmail.com\",\n" +
                         "    \"password\": \"12345678\"\n" +
                         "}")
                 .exchange()
@@ -87,6 +87,14 @@ public class UserServiceGatewayConfigTest {
                 .bodyValue("{}")
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    public void delete_deveRetornar200() {
+        webTestClient.delete().uri("/user/delete")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJVc2VyVG9rZW4iLCJzdWIiOiJyb2JlcnQyQGdtYWlsLmNvbSIsImlkIjoxOSwiZXhwIjoxNzAxOTM4NDc1fQ.dd2oBwogtv7JQGHI_35kygyi9-x9U9m3ToD_I5NtQMQ")
+                .exchange()
+                .expectStatus().isOk();
     }
 
 
