@@ -9,6 +9,7 @@ import com.github.zeldaservice.model.SingleRequestModel;
 import com.github.zeldaservice.model.favoriteModel.FavoriteGameModel;
 import com.github.zeldaservice.model.favoriteModel.ReturnFavoritesModel;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -16,15 +17,23 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
 @Service
+@AllArgsConstructor // pra injetar com o all args vc precisa colkocar todos os campos como private final.
 public class ZeldaService {
 
-    @Autowired
-    private TokenService tokenService;
+//    @Autowired // evite usar autowired porque é véio e não é recomendado pelo pessoal da mola. Use a injeção via construtor ou @AllArgsConstructor (que é um constutor gerado pra todas os fields)
+    private /*final*/ TokenService tokenService;
 
-    @Autowired
-    private FavoriteRepository favoriteRepository;
+//    @Autowired
+    private /*final*/  FavoriteRepository favoriteRepository;
 
-    private SecurityZeldaFilter securityZeldaFilter = new SecurityZeldaFilter();
+
+    // uma das opções: use um construtor....
+//    public ZeldaService(TokenService tokenService, FavoriteRepository favoriteRepository) {
+//        this.tokenService = tokenService;
+//        this.favoriteRepository = favoriteRepository;
+//    }
+
+    private SecurityZeldaFilter securityZeldaFilter = new SecurityZeldaFilter(); // se for um bean (@Service)
 
     public RequestModel getAllGames() throws SomethingWentWrongException{
         try {
@@ -83,8 +92,8 @@ public class ZeldaService {
 
         FavoriteGameModel favoriteGameModel = new FavoriteGameModel();
 
-        favoriteGameModel.setId_usuario(tokenService.getIdUser(tokenJWT));
-        favoriteGameModel.setId_jogo(favoriteRepository.findByid_jogo(id));
+        favoriteGameModel.setIdUsuario(tokenService.getIdUser(tokenJWT));
+        favoriteGameModel.setId_jogo(favoriteRepository.findById(Long.parseLong(id)).get().getId_jogo());
 
         return  favoriteRepository.save(favoriteGameModel);
     }

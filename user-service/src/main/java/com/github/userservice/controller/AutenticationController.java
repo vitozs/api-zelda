@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("login")
-public class AutenticationController {
+public class AutenticationController { //TH
 
     @Autowired
     private AuthenticationManager authenticationManager; // do proprio spring
@@ -31,7 +31,7 @@ public class AutenticationController {
     @Autowired
     private TokenService tokenService;
     @PostMapping("user")
-    public ResponseEntity login(@RequestBody @Valid AutenticationData data){
+    public ResponseEntity /*<TokenJWTData> Sempre defina tipo pra classes genéricas.*/ login(@RequestBody @Valid AutenticationData data){
         var authenticationTokentoken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         Authentication authentication = authenticationManager.authenticate(authenticationTokentoken);
 
@@ -43,7 +43,7 @@ public class AutenticationController {
     @PostMapping("authentication")
     @Transactional
     public ResponseEntity<Boolean> authentication(@RequestBody MultiValueMap<String, String> data) {
-        String email = data.getFirst("email");
+        /*var*/String email = data.getFirst("email");
         boolean emailExists = userRepository.existsByemail(email);
         return ResponseEntity.ok(emailExists);
     }
