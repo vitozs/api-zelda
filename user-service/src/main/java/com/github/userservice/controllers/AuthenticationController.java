@@ -1,4 +1,4 @@
-package com.github.userservice.controller;
+package com.github.userservice.controllers;
 
 import com.github.userservice.infra.security.TokenJWTData;
 import com.github.userservice.models.UserModel;
