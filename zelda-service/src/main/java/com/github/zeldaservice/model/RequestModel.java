@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 public class RequestModel {
     @JsonProperty("success")
-    public boolean success;
+    public boolean success; // private com getter e setter! nunca público. vc já tem o @Data e o @Data provem getter e setter, então põe private!
     @JsonProperty("count")
-    public Integer count;
+    public Integer count; //
     @JsonProperty("data")
     public List<ZeldaGameModel> data;
 }

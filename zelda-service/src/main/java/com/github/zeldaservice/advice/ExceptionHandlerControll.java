@@ -18,10 +18,19 @@ import java.util.HashMap;
 import java.util.Map;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
-public class ExceptionHandlerControll {
+public class ExceptionHandlerControll { // ResourceExceptionHandler
+// remover espaços sobressalentes! melhora a leitura absrudamente e a organização também! :)
 
 
-    @ExceptionHandler(Exception.class)
+    //talvez tratar mais casos de erro em diferentes status (404 pra quando não achar, 401 pra erro de autenticação, etc)
+
+//    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({ // coloque osbigodes!
+            Exception.class,
+            // coloque mais exceptions aqui, mas evite colocar a Exceptiuon.class. ela é pai de tudo e sempre vai pegar ela.
+            // poréeeeeem vc não tem controle de qual tipo de erro.
+            // isso impede que vc lance tipos diferentes de retorno Http pra cada tipo de exception.
+    })
     public ProblemDetail exceptionHandler(Exception ex){
         ProblemDetail errorDetail = null;
 

@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = "zelda-api")
 public class ZeldaController {
 
-    @Autowired
+    @Autowired // autowired nããão (tem outra classe que eu comentei o pq! :D)
     ZeldaService zeldaService;
 
     @SecurityRequirement(name = "Bearer Authentication")
@@ -46,8 +46,8 @@ public class ZeldaController {
     }
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("game/Favorites")
-    public ResponseEntity<ReturnFavoritesModel> getFavoriteGames(HttpServletRequest request) throws GameNotFoundException {
-
+    public ResponseEntity<ReturnFavoritesModel> getFavoriteGames(HttpServletRequest request) throws GameNotFoundException { // exception não lançada nem gerenciada (?)
+// espaços!
 
         return new ResponseEntity<>(zeldaService.getFavoriteGames(request), HttpStatus.OK);
     }

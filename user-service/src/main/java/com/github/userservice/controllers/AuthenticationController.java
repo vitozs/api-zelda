@@ -1,4 +1,4 @@
-package com.github.userservice.controller;
+package com.github.userservice.controllers;
 
 import com.github.userservice.infra.security.TokenJWTData;
 import com.github.userservice.models.UserModel;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("login")
-public class AutenticationController {
+public class AuthenticationController {
 
     @Autowired
-    private AuthenticationManager authenticationManager; // do proprio spring
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +31,7 @@ public class AutenticationController {
     @Autowired
     private TokenService tokenService;
     @PostMapping("user")
-    public ResponseEntity login(@RequestBody @Valid AutenticationData data){
+    public ResponseEntity<TokenJWTData>login(@RequestBody @Valid AutenticationData data){
         var authenticationTokentoken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         Authentication authentication = authenticationManager.authenticate(authenticationTokentoken);
 
@@ -43,7 +43,7 @@ public class AutenticationController {
     @PostMapping("authentication")
     @Transactional
     public ResponseEntity<Boolean> authentication(@RequestBody MultiValueMap<String, String> data) {
-        String email = data.getFirst("email");
+        var email = data.getFirst("email");
         boolean emailExists = userRepository.existsByemail(email);
         return ResponseEntity.ok(emailExists);
     }
