@@ -1,6 +1,9 @@
 # Projeto Final API Zelda
 
-Este projeto é uma API desenvolvida em Spring Boot utilizando o Gradle como gerenciador de dependências, voltada para entusiastas da série de jogos "The Legend of Zelda". A equipe de desenvolvedores responsável pelo projeto é composta por Bianca Gomes, Denis Kizlyk, Robert de Carvalho e Vitor Chagas.
+Este projeto é uma API desenvolvida em Spring Boot utilizando o Gradle como gerenciador de dependências, voltada para entusiastas da série de jogos "The Legend of Zelda". A equipe de desenvolvedores responsável pelo projeto é composta por:
+- [Bianca Gomes](https://github.com/bian-ka)
+- [Robert de Carvalho](https://github.com/robertperquim)
+- [Vitor Chagas](https://github.com/vitozs)
 
 ## Estrutura do Projeto
 
