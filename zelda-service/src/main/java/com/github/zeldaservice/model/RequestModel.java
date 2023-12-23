@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 public class RequestModel {
     @JsonProperty("success")
-    public boolean success;
+    private boolean success;
     @JsonProperty("count")
-    public Integer count;
+    private Integer count;
     @JsonProperty("data")
-    public List<ZeldaGameModel> data;
+    private List<ZeldaGameModel> data;
 }

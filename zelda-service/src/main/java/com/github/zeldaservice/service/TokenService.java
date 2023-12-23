@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
    // @Value("${api.security.token.secret}")
-    private String secret = "12345678"; //NAO ESTA PEGANDO NA PROPETIS
+    private String secret = "12345678";
     public String getSubject(String tokenJWT){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

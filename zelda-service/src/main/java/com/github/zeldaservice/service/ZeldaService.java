@@ -9,22 +9,23 @@ import com.github.zeldaservice.model.SingleRequestModel;
 import com.github.zeldaservice.model.favoriteModel.FavoriteGameModel;
 import com.github.zeldaservice.model.favoriteModel.ReturnFavoritesModel;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
 @Service
 public class ZeldaService {
+    private final TokenService tokenService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final FavoriteRepository favoriteRepository;
 
-    @Autowired
-    private FavoriteRepository favoriteRepository;
-
-    private SecurityZeldaFilter securityZeldaFilter = new SecurityZeldaFilter();
+    public ZeldaService(TokenService tokenService, FavoriteRepository favoriteRepository) {
+        this.tokenService = tokenService;
+        this.favoriteRepository = favoriteRepository;
+    }
+    private final SecurityZeldaFilter securityZeldaFilter = new SecurityZeldaFilter();
 
     public RequestModel getAllGames() throws SomethingWentWrongException{
         try {
@@ -83,8 +84,8 @@ public class ZeldaService {
 
         FavoriteGameModel favoriteGameModel = new FavoriteGameModel();
 
-        favoriteGameModel.setId_usuario(tokenService.getIdUser(tokenJWT));
-        favoriteGameModel.setId_jogo(favoriteRepository.findByid_jogo(id));
+        favoriteGameModel.setIdUsuario(tokenService.getIdUser(tokenJWT));
+        favoriteGameModel.setIdJogo(favoriteRepository.findByIdJogo(id));
 
         return  favoriteRepository.save(favoriteGameModel);
     }
@@ -96,7 +97,7 @@ public class ZeldaService {
 
         Long idUser = tokenService.getIdUser(tokenJWT);
 
-        returnFavoritesModel.setUserModel(favoriteRepository.findByname(idUser));
+        returnFavoritesModel.setUserModel(favoriteRepository.findByName(idUser));
         returnFavoritesModel.setFavoriteGamesList(favoriteRepository.findByGames(idUser));
 
         return returnFavoritesModel;
