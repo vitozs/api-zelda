@@ -8,7 +8,4 @@ public record ZeldaGameModel(
          String publisher,
          String released_date,
          String id) {
-
-
-
 }

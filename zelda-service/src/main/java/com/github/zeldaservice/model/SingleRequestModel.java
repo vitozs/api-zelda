@@ -8,7 +8,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SingleRequestModel {
     @JsonProperty("success")
-    public boolean success;
+    private boolean success;
     @JsonProperty("data")
-    public ZeldaGameModel singleData;
+    private ZeldaGameModel singleData;
 }

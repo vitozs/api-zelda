@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("zelda")
 @Tag(name = "zelda-api")
 public class ZeldaController {
-
-    @Autowired
-    ZeldaService zeldaService;
-
+    private final ZeldaService zeldaService;
+    public ZeldaController(final ZeldaService service) {
+        this.zeldaService = service;
+    }
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("all")
     public ResponseEntity<List<ZeldaGameModel>> getAll(){
@@ -41,14 +41,11 @@ public class ZeldaController {
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("game/saveFavorite/{id}")
     public ResponseEntity<FavoriteGameModel> favoriteGame(@PathVariable("id") String id, HttpServletRequest request) {
-
         return new ResponseEntity<>( zeldaService.saveFavoriteGame(id, request),HttpStatus.OK);
     }
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("game/Favorites")
-    public ResponseEntity<ReturnFavoritesModel> getFavoriteGames(HttpServletRequest request) throws GameNotFoundException {
-
-
+    public ResponseEntity<ReturnFavoritesModel> getFavoriteGames(HttpServletRequest request){
         return new ResponseEntity<>(zeldaService.getFavoriteGames(request), HttpStatus.OK);
     }
 }

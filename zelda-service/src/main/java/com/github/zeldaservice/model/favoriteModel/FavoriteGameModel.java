@@ -10,6 +10,6 @@ public class FavoriteGameModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long id_usuario;
-    private Long id_jogo;
+    private Long idUsuario;
+    private Long idJogo;
 }
